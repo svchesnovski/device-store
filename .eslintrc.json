@@ -1,0 +1,72 @@
+// {
+//     "env": {
+//         "browser": true,
+//         "es2021": true
+//     },
+//     "extends": [
+//         // "airbnb",
+//         // "eslint-config-react-app",
+//         // "plugin:prettier/recommended",
+//         // "plugin:react/recommended",
+//         // "plugin:react/jsx-runtime",
+//         // "plugin:import/recommended",
+//         // "prettier"
+//     ],
+//     "parserOptions": {
+//         "ecmaVersion": "latest",
+//         "sourceType": "module"
+//     },
+//     "plugins": ["react", "prettier", "import"],
+//     "settings": {
+//         "import/resolver": {
+//         "typescript": true,
+//         "node": true
+//         },
+//         "react": {
+//         "version": "detect"
+//         }
+//     },
+//     "rules": {
+//         "prettier/prettier": "error",
+//         "import/named": "error",
+//         "import/default": "error",
+//         "import/namespace": "error",
+//         "react/react-in-jsx-scope": "off"
+//     }
+// }
+{
+    "ignorePatterns": ["ijl.config.js"],
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "plugin:prettier/recommended",
+        "prettier"
+    ],
+    "overrides": [],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react", "prettier", "import"],
+    "settings": {
+        "import/resolver": {
+            "typescript": true,
+            "node": true
+        },
+        "react": {
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "prettier/prettier": "error"
+    },
+    "globals": {
+        "process": true 
+    }
+}

@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect, useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import AppRouter from '../src/components/AppRuoter' // Импортируйте AppRouter
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import NavBar from './components/NavBar'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../src/index'
+import { check } from './http/userAPI'
+import { Spinner } from 'react-bootstrap'
 
-export default App;
+const App = observer(() => {
+    const { user } = useContext(Context)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        check()
+            .then((data) => {
+                user.setUser(data)
+                user.setIsAuth(true)
+            })
+            .finally(() => setLoading(false))
+    }, [])
+
+    if (loading) {
+        return <Spinner animation={'grow'} />
+    }
+    return (
+        <BrowserRouter>
+            <NavBar />
+            <AppRouter />
+        </BrowserRouter>
+    )
+})
+
+export default App
