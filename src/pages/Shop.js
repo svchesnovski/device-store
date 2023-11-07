@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import TypeBar from '../components/TypeBar'
 import BrandBar from '../components/BrandBar'
@@ -10,20 +10,20 @@ import Pages from '../components/Pages'
 
 const Shop = observer(() => {
     const { device } = useContext(Context)
+    const [limit, setLimit] = useState(5)
 
     useEffect(() => {
         fetchTypes().then((data) => device.setTypes(data))
         fetchBrands().then((data) => device.setBrands(data))
-        fetchDevices(null, null, 1, 4).then((data) => {
+        fetchDevices(null, null, 1, limit).then((data) => {
             device.setDevices(data.rows)
             device.setTotalCount(data.count)
         })
-    }, [])
+    }, [limit])
 
     useEffect(() => {
-        // Проверка на "Все категории" и "Все бренды"
         if (device.selectedType === null && device.selectedBrand === null) {
-            fetchDevices(null, null, device.page, 4).then((data) => {
+            fetchDevices(null, null, device.page, limit).then((data) => {
                 device.setDevices(data.rows)
                 device.setTotalCount(data.count)
             })
@@ -35,25 +35,25 @@ const Shop = observer(() => {
                 ? device.selectedBrand.id
                 : null
 
-            fetchDevices(selectedType, selectedBrand, device.page, 4).then(
+            fetchDevices(selectedType, selectedBrand, device.page, limit).then(
                 (data) => {
                     device.setDevices(data.rows)
                     device.setTotalCount(data.count)
                 }
             )
         }
-    }, [device.page, device.selectedType, device.selectedBrand])
+    }, [device.page, device.selectedType, device.selectedBrand, limit])
 
     return (
         <Container>
             <Row className="mt-2">
                 <Col md={3}>
                     <TypeBar />
+                    <BrandBar />
                 </Col>
                 <Col md={9}>
-                    <BrandBar />
                     <DeviceList />
-                    <Pages />
+                    <Pages setLimit={setLimit} />
                 </Col>
             </Row>
         </Container>

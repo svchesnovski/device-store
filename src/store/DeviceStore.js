@@ -9,17 +9,18 @@ export default class DeviceStore {
         this._selectedBrand = {}
         this._page = 1
         this._totalCount = 0
-        this._limit = 3
-        makeAutoObservable(this) // функция из mobx с параметром (объект) this, теперь mobx будет следить за изменением этих переменных, при их изменениях компоненты будут пререндериваться.
+        this._limit = 5 // Устанавливаем лимит по умолчанию
+        makeAutoObservable(this)
     }
 
-    //создаем экшены - это функции, которые состояние изменяют. в данном случае это простая функция, которая принимает параметром булевое значение и присваивает его переменной isAuth
     setTypes(types) {
         this._types = types
     }
+
     setBrands(brands) {
         this._brands = brands
     }
+
     setDevices(devices) {
         this._devices = devices
     }
@@ -37,8 +38,14 @@ export default class DeviceStore {
     setPage(page) {
         this._page = page
     }
+
     setTotalCount(count) {
         this._totalCount = count
+    }
+
+    // Новый метод для установки лимита
+    setLimit(limit) {
+        this._limit = limit
     }
 
     get types() {
@@ -52,21 +59,27 @@ export default class DeviceStore {
     get devices() {
         return this._devices
     }
+
     get selectedType() {
         return this._selectedType
     }
+
     get selectedBrand() {
         return this._selectedBrand
     }
+
     get totalCount() {
         return this._totalCount
     }
+
     get page() {
         return this._page
     }
+
     get limit() {
         return this._limit
     }
+
     getBrandNameById(brandId) {
         const brand = this._brands.find((brand) => brand.id === brandId)
         return brand ? brand.name : 'Unknown Brand'
